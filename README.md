@@ -5,7 +5,7 @@ This project permits to generate your own **BIP39 seed** using your own entropy 
 This is a python script that accepts as a parameter a string of 256 bits ( 01 ) created with your own entropy and generates a bip39 mnemonic seed.
 
 ## Usage example:
-Pass your entropy as parameter:
+Pass your entropy as parameter. It should be a string of 256 bits (0 and 1 chars):
 
 ```
 python3 main.py 001100...00110
