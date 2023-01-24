@@ -1,4 +1,4 @@
-# GYOES: generate your own entropy seed
+# GYOES: **G**enerate **Y**our **O**wn **E**ntropy **S**eed
 
 This project permits to generate your own **BIP39 seed** using your own entropy of 256 bit. So that you don't have to trust any RNG to generate your mnemonic.
 
