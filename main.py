@@ -1,4 +1,3 @@
-import sys
 from hashlib import sha256
 import binascii
 
@@ -6,22 +5,22 @@ bip39_words_string = "abandon ability able about above absent absorb abstract ab
 bip39_words_list = bip39_words_string.split(' ')
 
 def main():
-    args = sys.argv
+    while True:
+        try:
+            entropy = input('Enter your own 256 bit entropy, a sequence of 256 characters made of "0" e "1":\n').strip()
+        except KeyboardInterrupt:
+            return
 
-    if len(args) != 2:
-        print('\nERROR: insert only one parameter entropy\n')
-        return
+        if not all(char in '01' for char in entropy):
+            print('\nERROR: entropy invalid. Insert a sequence of only 0 and 1\n')
+            continue
 
-    entropy = args[1]
+        if len(entropy) != 256:
+            print('\nERROR: invalid entropy length. Provided {} bits of entropy. 256 bits must be provided\n'.format(len(entropy)))
+            continue
 
-    if not all(char in '01' for char in entropy):
-        print('\nERROR: entropy invalid. Insert a sequence of only 0 and 1\n')
-        return
+        break
 
-    if len(entropy) != 256:
-        print('\nERROR: Invalid entropy length. Provided {} bits of entropy. 256 bits must be provided!\n'.format(len(entropy)))
-        return
-    
     hexstr = "{0:0>4X}".format(int(entropy,2)) 
     data = binascii.a2b_hex(hexstr)
     hs = sha256(data).hexdigest()
@@ -31,8 +30,8 @@ def main():
     )
     entropy += last_bits
 
-    bits = 11
-    splitted = [entropy[i:i+bits] for i in range(0, len(entropy), bits)]
+    bits_per_word = 11
+    splitted = [entropy[i:i+bits_per_word] for i in range(0, len(entropy), bits_per_word)]
     words = [ bip39_words_list[int(i, 2)] for i in splitted ]
     
     print('\nSEED GENERATED:\n\n{}\n'.format(' '.join(words)))
