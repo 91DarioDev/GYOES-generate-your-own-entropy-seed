@@ -7,7 +7,7 @@ bip39_words_list = bip39_words_string.split(' ')
 def main():
     while True:
         try:
-            entropy = input('Enter your own 256 bit entropy, a sequence of 256 characters made of "0" e "1":\n').strip()
+            entropy = input('Enter your own 128 or 256 bit entropy, a sequence of 128 or 256 characters made of "0" e "1":\n').strip()
         except KeyboardInterrupt:
             return
 
@@ -15,8 +15,8 @@ def main():
             print('\nERROR: entropy invalid. Insert a sequence of only 0 and 1\n')
             continue
 
-        if len(entropy) != 256:
-            print('\nERROR: invalid entropy length. Provided {} bits of entropy. 256 bits must be provided\n'.format(len(entropy)))
+        if len(entropy) not in [128, 256]:
+            print('\nERROR: invalid entropy length. Provided {} bits of entropy. 128 or 256 bits must be provided\n'.format(len(entropy)))
             continue
 
         break
@@ -24,10 +24,8 @@ def main():
     hexstr = "{0:0>4X}".format(int(entropy,2)) 
     data = binascii.a2b_hex(hexstr)
     hs = sha256(data).hexdigest()
-    last_bits = '{}{}'.format(
-        bin(int(hs[0], 16))[2:].zfill(4),
-        bin(int(hs[1], 16))[2:].zfill(4)
-    )
+    chars_for_checksum = 2 if len(entropy) == 256 else 1
+    last_bits = ''.join([ str(bin(int(hs[i], 16))[2:].zfill(4)) for i in range(0, chars_for_checksum) ])
     entropy += last_bits
 
     bits_per_word = 11
