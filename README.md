@@ -16,7 +16,7 @@ Download the project as a zip, open a terminal in the directory and type:
 python3 main.py
 ```
 
-the follow the script instructions.
+then follow the script instructions.
 
 ## Don't trust, verify!
 The code is very minimal and simple so that can be reviewed. In order to avoid that you have to review the bip39 words list, it is in a separate file and you can just delete that one and download it again from https://raw.githubusercontent.com/bitcoin/bips/master/bip-0039/english.txt and save it as `english.txt`
