@@ -30,7 +30,7 @@ def main():
 
         break
 
-    hexstr = "{0:0>4X}".format(int(entropy,2)) 
+    hexstr = "{0:0>4X}".format(int(entropy,2)).zfill(int(len(entropy)/4)) 
     data = binascii.a2b_hex(hexstr)
     hs = sha256(data).hexdigest()
 
